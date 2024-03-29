@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur mon blog !{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+div {
+    background-color : #CCC;
+}
+h3 {
+    color: darblue;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+    <a >
+
+    <h1>{{ article.title }}</h1>
+    <h3>{{ article.author }}</h3>
+    <h3>{{ article.text }}</h3>
+    </a>
+
+    {% for commentary in article.ArticleCommentary %}
+    <h1>{{ commentary.content }}</h1>
+    <h3>{{ commentary.author }}</h3>
+    {% endfor %}
+{% endblock %}
