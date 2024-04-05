@@ -5,7 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use App\Repository\ArticleRepository;
+use App\Entity\Commentary;
 
 class PublicController extends AbstractController
 {
@@ -43,8 +48,21 @@ class PublicController extends AbstractController
     {
         $article = $this->articleRepository->find($id);
 
+        $user = $this->getUser();
+        $commentary = new Commentary();
+        $commentary->setArticle($article);
+        $commentary->setDate(new \DateTime());
+        $commentary->setAuthor($user->getUserIdentifier());
+        $form = $this->createFormBuilder($commentary)
+            ->add('content', TextType::class)
+            ->add('date', DateType::class)
+            ->add('author', HiddenType::class)
+            ->add('submit', SubmitType::class, ['label' => 'Ajouter un commentaire'])
+            ->getForm();
+
         return $this->render('public/article.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'form' => $form,
         ]);
 
         

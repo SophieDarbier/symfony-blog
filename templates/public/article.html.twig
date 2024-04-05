@@ -26,4 +26,10 @@ h3 {
     <h1>{{ commentary.content }}</h1>
     <h3>{{ commentary.author }}</h3>
     {% endfor %}
+
+    {% if is_granted("ROLE_USER") %}
+       {{ form(form) }}
+    {% else %}
+        <p>Vous devez être connecté pour laisser un commentaire.</p>
+    {% endif %}
 {% endblock %}
