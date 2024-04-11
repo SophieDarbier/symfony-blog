@@ -27,6 +27,10 @@ h3 {
     <h3>{{ commentary.author }}</h3>
     {% endfor %}
 
+    {% if is_granted("ROLE_ADMIN") %}
+        <h1>JE SUIS ADMIN</h1>
+    {% endif %}
+
     {% if is_granted("ROLE_USER") %}
        {{ form(form) }}
     {% else %}
